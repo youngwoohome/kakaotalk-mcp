@@ -4,15 +4,21 @@ macOS 전용 KakaoTalk CLI/GUI 자동화 도구다.
 
 ## 바로 설치
 
-Homebrew로 CLI 설치:
+Homebrew로 바로 설치:
 
 ```bash
 brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
 brew install youngwoohome/kakaotalk-cli/kakao-auto
+kakao-auto gui
+```
+
+CLI만 쓸 때:
+
+```bash
 kakao-auto tui
 ```
 
-GUI까지 같이 쓰려면:
+GUI가 아닌 소스 checkout이 필요할 때:
 
 ```bash
 git clone https://github.com/youngwoohome/kakaotalk-cli.git
@@ -20,16 +26,6 @@ cd kakaotalk-cli
 ./scripts/install.sh --gui
 npm link
 kakao-auto gui
-```
-
-git clone으로 CLI만 설치할 때:
-
-```bash
-git clone https://github.com/youngwoohome/kakaotalk-cli.git
-cd kakaotalk-cli
-./scripts/install.sh
-npm link
-kakao-auto tui
 ```
 
 필수 조건:
@@ -46,15 +42,6 @@ kakao-auto gui
 kakao-auto scheduled
 kakao-auto instant examples/send-now.sample.json
 ```
-
-## 설치 메모
-
-- `./scripts/install.sh`
-  - CLI만 설치
-- `./scripts/install.sh --gui`
-  - Electron GUI까지 설치
-- `npm link`
-  - `kakao-auto` 명령을 전역에서 바로 쓰게 함
 
 ## 동작 방식
 

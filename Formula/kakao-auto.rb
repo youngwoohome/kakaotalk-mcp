@@ -1,5 +1,5 @@
 class KakaoAuto < Formula
-  desc "macOS KakaoTalk automation CLI"
+  desc "macOS KakaoTalk automation CLI and GUI"
   homepage "https://github.com/youngwoohome/kakaotalk-cli"
   url "https://github.com/youngwoohome/kakaotalk-cli.git",
       using: :git,
@@ -12,7 +12,6 @@ class KakaoAuto < Formula
 
   def install
     ENV["npm_config_cache"] = buildpath/"npm_cache"
-    ENV["npm_config_omit"] = "optional"
 
     system "npm", "install", *std_npm_args
     bin.install_symlink libexec/"bin/kakao-auto"
@@ -22,11 +21,6 @@ class KakaoAuto < Formula
     <<~EOS
       KakaoTalk.app must be installed at /Applications/KakaoTalk.app.
       Accessibility permission is required for your terminal app.
-
-      This Homebrew formula installs the CLI runtime only.
-      If you need the Electron GUI, use the source checkout with:
-        npm install --include=optional
-        ./bin/kakao-auto gui
     EOS
   end
 
