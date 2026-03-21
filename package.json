@@ -1,6 +1,6 @@
 {
   "name": "kakaotalk-auto-reconstructed",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "macOS-local KakaoTalk auto-send app rebuilt around AppleScript automation.",
   "main": "src/desktop/main.js",
@@ -9,11 +9,10 @@
     "kakao-auto": "./bin/kakao-auto"
   },
   "scripts": {
-    "start": "node ./bin/kakao-auto tui",
-    "check": "node --check src/index.js && node --check src/cli/run-scheduled.js && node --check src/cli/send-now.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js",
+    "start": "node ./bin/kakao-auto",
+    "check": "node --check src/index.js && node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js",
     "start:gui": "electron .",
     "start:tui": "node src/cli/tui.js",
-    "start:scheduled": "node src/cli/run-scheduled.js",
     "start:instant": "node src/cli/send-now.js examples/send-now.sample.json",
     "install:cli": "npm install --omit=optional",
     "install:gui": "npm install --include=optional",
