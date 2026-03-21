@@ -4,21 +4,26 @@ macOS 전용 KakaoTalk CLI/GUI 자동화 도구다.
 
 ## 바로 설치
 
-Homebrew로 바로 설치:
+처음 설치:
 
 ```bash
 brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
 brew install youngwoohome/kakaotalk-cli/kakao-auto
-kakao-auto gui
 ```
 
-CLI만 쓸 때:
+설치 후 CLI 실행:
 
 ```bash
 kakao-auto tui
 ```
 
-GUI가 아닌 소스 checkout이 필요할 때:
+설치 후 GUI 실행:
+
+```bash
+kakao-auto gui
+```
+
+소스 checkout이 필요할 때:
 
 ```bash
 git clone https://github.com/youngwoohome/kakaotalk-cli.git
