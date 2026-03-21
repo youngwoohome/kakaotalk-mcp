@@ -15,6 +15,12 @@ class KakaoAuto < Formula
     ENV["npm_config_include"] = "optional"
 
     system "npm", "install", "--include=optional", *std_npm_args
+
+    electron_install = libexec/"lib/node_modules/kakaotalk-auto-reconstructed/node_modules/electron/install.js"
+    if electron_install.exist?
+      system Formula["node"].opt_bin/"node", electron_install
+    end
+
     bin.install_symlink libexec/"lib/node_modules/kakaotalk-auto-reconstructed/bin/kakao-auto" => "kakao-auto"
   end
 
