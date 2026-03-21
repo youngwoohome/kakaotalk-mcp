@@ -3,9 +3,9 @@ class KakaoAuto < Formula
   homepage "https://github.com/youngwoohome/kakaotalk-cli"
   url "https://github.com/youngwoohome/kakaotalk-cli.git",
       using: :git,
-      tag: "v0.1.1",
-      revision: "3acb784478772e46c1034a2003e480f701d50a6e"
-  version "0.1.1"
+      tag: "v0.1.2",
+      revision: "949676ed2126d2b5cda2dae76c41e0e266060d84"
+  version "0.1.2"
 
   depends_on "node"
   depends_on :macos
@@ -22,6 +22,7 @@ class KakaoAuto < Formula
     end
 
     bin.install_symlink libexec/"lib/node_modules/kakaotalk-auto-reconstructed/bin/kakao-auto" => "kakao-auto"
+    bin.install_symlink libexec/"lib/node_modules/kakaotalk-auto-reconstructed/bin/kakao-auto" => "kakao"
   end
 
   def caveats
@@ -32,6 +33,6 @@ class KakaoAuto < Formula
   end
 
   test do
-    assert_match "Usage: kakao-auto", shell_output("#{bin}/kakao-auto --help")
+    assert_match "Usage: kakao", shell_output("#{bin}/kakao --help")
   end
 end
