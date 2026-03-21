@@ -1,6 +1,6 @@
 {
   "name": "kakotalk-mcp",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "macOS KakaoTalk automation CLI with Claude Code MCP integration.",
   "main": "src/desktop/main.js",
   "type": "commonjs",
@@ -16,8 +16,7 @@
     "start:gui": "electron .",
     "start:tui": "node src/cli/tui.js",
     "start:instant": "node src/cli/send-now.js examples/send-now.sample.json",
-    "brew:dist": "zsh ./scripts/build-homebrew-dist.sh",
-    "brew:formula": "node ./scripts/render-homebrew-formula.js"
+    "prepublishOnly": "node ./scripts/postinstall.js"
   },
   "keywords": ["kakaotalk", "kakao", "automation", "macos", "cli", "mcp", "claude"],
   "author": "youngwoohome",

@@ -17,7 +17,7 @@ const commandMap = {
   instant: ['src/cli/send-now.js', 'examples/send-now.sample.json'],
   mcp: ['src/cli/mcp.js'],
   gui: ['node_modules/electron/cli.js', '.'],
-  check: ['-c', 'node --check src/index.js && node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
+  check: ['-c', 'node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
 };
 
 function printHelp() {
