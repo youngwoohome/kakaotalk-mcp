@@ -15,7 +15,7 @@ class KakaoAuto < Formula
     ENV["npm_config_include"] = "optional"
 
     system "npm", "install", "--include=optional", *std_npm_args
-    bin.install_symlink libexec/"bin/kakao-auto"
+    bin.install_symlink libexec/"lib/node_modules/kakaotalk-auto-reconstructed/bin/kakao-auto" => "kakao-auto"
   end
 
   def caveats
