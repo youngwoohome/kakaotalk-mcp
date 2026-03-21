@@ -1,6 +1,6 @@
 ---
 name: kakaotalk-auto-mac
-description: Use when the user wants to install, run, troubleshoot, or operate the macOS KakaoTalk automation tool from this repo. Handles Homebrew install, old tap conflicts, CLI/TUI/GUI launch, and basic verification.
+description: Use when the user wants to install, run, troubleshoot, or operate the macOS KakaoTalk automation tool from this repo. Covers Homebrew install, old tap conflicts, CLI/TUI/GUI launch, command selection, and the main automation capabilities.
 ---
 
 # KakaoTalk Auto Mac
@@ -13,6 +13,9 @@ Use this skill when the task is about installing or using the macOS KakaoTalk au
 - Resolving old tap conflicts such as `youngwoojung/kakao-auto`
 - Launching CLI/TUI with `kakao-auto tui`
 - Launching GUI with `kakao-auto gui`
+- Running scheduled sends with `kakao-auto scheduled`
+- Running one-off sends with `kakao-auto instant <json>`
+- Choosing whether TUI, GUI, or instant mode is the best fit
 - Verifying that KakaoTalk and macOS Accessibility prerequisites are in place
 
 ## Prerequisites
@@ -36,6 +39,8 @@ Then launch one of:
 ```bash
 kakao-auto tui
 kakao-auto gui
+kakao-auto scheduled
+kakao-auto instant examples/send-now.sample.json
 ```
 
 ## If install conflicts with an old tap
@@ -58,16 +63,77 @@ command -v kakao-auto
 kakao-auto --help
 ```
 
-If the user asked for CLI, prefer:
+## Command guide
+
+Use these commands depending on the user request:
 
 ```bash
 kakao-auto tui
 ```
 
-If the user asked for desktop UI, prefer:
+- Desktop app:
 
 ```bash
 kakao-auto gui
+```
+
+- Scheduled sending loop from local JSON:
+
+```bash
+kakao-auto scheduled
+```
+
+- One-off send from a JSON payload:
+
+```bash
+kakao-auto instant examples/send-now.sample.json
+```
+
+## When to choose each mode
+
+- Use `tui` when the user wants terminal-first operation, quick testing, room selection, or message analysis from the terminal.
+- Use `gui` when the user wants visual room selection and a desktop control panel.
+- Use `scheduled` when the user explicitly wants background or queued sends from `data/send-list.json`.
+- Use `instant` when the user already has a payload file or wants reproducible scripted sending.
+
+## Main capabilities
+
+- Read KakaoTalk room list from the macOS app
+- Select one or more rooms
+- Send text messages
+- Attach files through the macOS file picker flow
+- Store local send history
+- Run through TUI or GUI
+
+## Typical workflows
+
+### Install and launch TUI
+
+```bash
+brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
+brew install youngwoohome/kakaotalk-cli/kakao-auto
+kakao-auto tui
+```
+
+### Install and launch GUI
+
+```bash
+brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
+brew install youngwoohome/kakaotalk-cli/kakao-auto
+kakao-auto gui
+```
+
+### Run one-off send
+
+```bash
+kakao-auto instant examples/send-now.sample.json
+```
+
+### Verify install before doing anything else
+
+```bash
+command -v kakao-auto
+kakao-auto --help
 ```
 
 ## Guidance
@@ -76,3 +142,5 @@ kakao-auto gui
 - If the user only wants CLI, still do the Homebrew install first, then run `kakao-auto tui`.
 - If GUI launches on macOS as `Electron`, explain that this is expected for the current build.
 - If KakaoTalk automation fails, check Accessibility permission before changing code.
+- If the user asks what the tool can do, list the actual commands and capabilities before discussing installation details.
+- When the user already has the tool installed, skip install and go straight to the requested command.

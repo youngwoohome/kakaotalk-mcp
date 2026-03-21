@@ -1,4 +1,4 @@
 interface:
   display_name: "KakaoTalk Auto Mac"
-  short_description: "Install and run the macOS KakaoTalk automation tool"
-  default_prompt: "Install the macOS KakaoTalk automation tool from this repo, resolve any Homebrew tap conflicts, verify the install, and launch the requested CLI or GUI mode."
+  short_description: "Install, launch, and operate the macOS KakaoTalk automation tool"
+  default_prompt: "Use the macOS KakaoTalk automation tool from this repo. If it is not installed, install it with Homebrew and resolve any old tap conflicts. Then choose the right mode (`tui`, `gui`, `scheduled`, or `instant`), verify the tool works, and continue with the requested task."
