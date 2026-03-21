@@ -15,6 +15,7 @@ const commandMap = {
   rooms: ['src/cli/rooms.js'],
   analyze: ['src/cli/analyze.js'],
   instant: ['src/cli/send-now.js', 'examples/send-now.sample.json'],
+  mcp: ['src/cli/mcp.js'],
   gui: ['node_modules/electron/cli.js', '.'],
   check: ['-c', 'node --check src/index.js && node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
 };
@@ -28,6 +29,7 @@ function printHelp() {
       '  rooms       List KakaoTalk rooms sorted by recent activity',
       '  analyze     Analyze a room and summarize recent messages',
       '  instant     Send immediately using a JSON payload',
+      '  mcp         Manage Claude Code MCP integration (install / remove)',
       '  gui         Open the Electron desktop app',
       '  tui         Start the interactive terminal UI',
       '  check       Run syntax checks',

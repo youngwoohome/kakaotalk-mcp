@@ -138,11 +138,15 @@ async function main() {
   const options = parseArgs(process.argv.slice(2));
   const driver = createMacAutomationDriver();
   const rooms = await driver.listChatRooms(options.limit);
-  const sortedRooms = sortRoomsByActivity(rooms).map((room, index) => ({
-    index: index + 1,
-    roomName: room.roomName,
-    lastActivity: room.lastActivity || '',
-  }));
+  const sortedRooms = sortRoomsByActivity(rooms).map((room, index) => {
+    const parsed = parseLastActivity(room.lastActivity || '');
+    return {
+      index: index + 1,
+      roomName: room.roomName,
+      lastActivity: room.lastActivity || '',
+      lastActivityIso: parsed ? parsed.toISOString() : null,
+    };
+  });
 
   if (options.json) {
     process.stdout.write(`${JSON.stringify(sortedRooms, null, 2)}\n`);

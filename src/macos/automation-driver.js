@@ -205,7 +205,7 @@ function createMacAutomationDriver(options = {}) {
     try {
       await ensureKakaoTalkRunning();
       const output = await runNativeHelper(['list-rooms', String(Math.max(1, Number(limit) || 20))], {
-        timeoutMs: Math.min(6000, 2200 + (Math.max(1, Number(limit) || 20) * 120)),
+        timeoutMs: 3000 + (Math.max(1, Number(limit) || 20) * 200),
       });
       const parsed = JSON.parse(output);
       if (Array.isArray(parsed) && parsed.length > 0) {
@@ -264,7 +264,7 @@ function createMacAutomationDriver(options = {}) {
       'end tell',
       'set AppleScript\'s text item delimiters to linefeed',
       'return outputLines as text',
-    ], { timeoutMs: Math.min(5000, 1800 + (Math.max(1, Number(limit) || 20) * 120)) });
+    ], { timeoutMs: 3000 + (Math.max(1, Number(limit) || 20) * 300) });
 
     return output
       .split(/\r?\n/)

@@ -120,6 +120,7 @@ async function main() {
     linkCount: analysis.linkRows.length,
     contactCount: analysis.contactRows.length,
     highlights: analysis.highlights,
+    messages: analysis.messages,
     tailRows: analysis.rawRows.slice(-8),
     crawl: crawlResult.crawl,
   };

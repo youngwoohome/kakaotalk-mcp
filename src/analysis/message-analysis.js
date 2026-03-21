@@ -58,16 +58,91 @@ function extractFocusKeywords(focusText) {
   ));
 }
 
+const TIMESTAMP_PATTERNS = [
+  /^(오전|오후)\s*\d{1,2}:\d{2}$/,
+  /^\d{1,2}:\d{2}(\s?[AP]M)?$/i,
+  /^(today|yesterday)$/i,
+  /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}$/i,
+  /^\d{1,2}\/\d{1,2}\/\d{2,4}$/,
+];
+
+function isTimestampPart(value) {
+  return TIMESTAMP_PATTERNS.some((re) => re.test(String(value || '').trim()));
+}
+
+// UI chrome strings that appear in AX tree but are not message content
+const UI_NOISE = new Set(['Share', 'Reply', 'Forward', 'Like', 'Copy', 'Delete', 'More']);
+
+function parseMessageParts(parts) {
+  if (!Array.isArray(parts) || parts.length === 0) {
+    return { sender: '', body: '', timestamp: '' };
+  }
+
+  let timestamp = '';
+  let remaining;
+
+  // read-room-messages returns parts[0] as "<rowIndex>\n<timestamp>"
+  const rowTimestampMatch = /^\d+\n(.+)$/.exec(parts[0]);
+  if (rowTimestampMatch) {
+    timestamp = rowTimestampMatch[1].trim();
+    remaining = parts.slice(1);
+  } else if (isTimestampPart(parts[0])) {
+    timestamp = parts[0];
+    remaining = parts.slice(1);
+  } else {
+    // Fallback: scan from the end for a timestamp
+    let timestampIndex = -1;
+    for (let i = parts.length - 1; i >= 0; i -= 1) {
+      if (isTimestampPart(parts[i])) {
+        timestampIndex = i;
+        break;
+      }
+    }
+    timestamp = timestampIndex >= 0 ? parts[timestampIndex] : '';
+    remaining = timestampIndex >= 0 ? parts.filter((_, i) => i !== timestampIndex) : parts.slice();
+  }
+
+  // Strip UI chrome (Share, Reply, etc.)
+  const meaningful = remaining.filter((p) => !UI_NOISE.has(p.trim()));
+
+  if (meaningful.length === 0) {
+    return { sender: '', body: '', timestamp };
+  }
+
+  const firstPart = meaningful[0];
+  const looksLikeSender = firstPart.length <= 20
+    && !/https?:\/\//.test(firstPart)
+    && !/\n/.test(firstPart);
+
+  if (meaningful.length === 1) {
+    return looksLikeSender
+      ? { sender: firstPart, body: '', timestamp }
+      : { sender: '', body: firstPart, timestamp };
+  }
+
+  if (looksLikeSender) {
+    return {
+      sender: firstPart,
+      body: meaningful.slice(1).join(' ').replace(/\s+/g, ' ').trim(),
+      timestamp,
+    };
+  }
+
+  return {
+    sender: '',
+    body: meaningful.join(' ').replace(/\s+/g, ' ').trim(),
+    timestamp,
+  };
+}
+
 function normalizeMessageRows(rows) {
   return rows
     .map((row) => Array.isArray(row) ? row.map((entry) => String(entry || '').trim()).filter(Boolean) : [])
     .filter((row) => row.length > 0)
     .map((row) => {
       const text = row.join(' | ').replace(/\s+/g, ' ').trim();
-      return {
-        parts: row,
-        text,
-      };
+      const { sender, body, timestamp } = parseMessageParts(row);
+      return { parts: row, text, sender, body, timestamp };
     })
     .filter((row) => row.text);
 }
@@ -107,36 +182,40 @@ function scoreMessageRow(text, focus = null) {
 
 function buildMessageAnalysis(rows, focus = null) {
   const normalized = normalizeMessageRows(rows);
-  const highlights = normalized
-    .map((row) => ({
-      ...row,
-      score: scoreMessageRow(row.text, focus),
-    }))
+  const scored = normalized.map((row) => ({
+    ...row,
+    score: scoreMessageRow(row.text, focus),
+  }));
+
+  // Determine top-12 highlight texts (score >= 3, unique, by score desc)
+  const highlightTexts = new Set();
+  const sortedByScore = [...scored]
     .filter((row) => row.score >= 3)
     .sort((a, b) => b.score - a.score || b.text.length - a.text.length);
-
-  const uniqueHighlights = [];
-  const seen = new Set();
-  for (const row of highlights) {
-    if (seen.has(row.text)) {
-      continue;
-    }
-    seen.add(row.text);
-    uniqueHighlights.push(row);
-    if (uniqueHighlights.length >= 12) {
+  for (const row of sortedByScore) {
+    if (highlightTexts.size >= 12) {
       break;
     }
+    highlightTexts.add(row.text);
   }
+
+  // Unified messages array: all rows in chronological order with isHighlight flag
+  const messages = scored.map((row) => ({
+    ...row,
+    isHighlight: highlightTexts.has(row.text),
+  }));
 
   const linkRows = normalized.filter((row) => /https?:\/\/\S+|[a-z0-9.-]+\.[a-z]{2,}/i.test(row.text));
   const contactRows = normalized.filter((row) => /\b\d{2,4}-\d{3,4}-\d{4}\b|\b01\d-\d{3,4}-\d{4}\b/.test(row.text));
+  const highlights = messages.filter((m) => m.isHighlight).sort((a, b) => b.score - a.score);
 
   return {
     focus,
     totalRows: normalized.length,
     linkRows,
     contactRows,
-    highlights: uniqueHighlights,
+    highlights,
+    messages,
     rawRows: normalized,
   };
 }
