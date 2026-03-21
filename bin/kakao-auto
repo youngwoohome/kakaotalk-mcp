@@ -12,10 +12,10 @@ const args = process.argv.slice(3);
 const commandMap = {
   tui: ['src/cli/tui.js'],
   rooms: ['src/cli/rooms.js'],
-  scheduled: ['src/cli/run-scheduled.js'],
+  analyze: ['src/cli/analyze.js'],
   instant: ['src/cli/send-now.js', 'examples/send-now.sample.json'],
   gui: ['node_modules/electron/cli.js', '.'],
-  check: ['-c', 'node --check src/index.js && node --check src/cli/run-scheduled.js && node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
+  check: ['-c', 'node --check src/index.js && node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
 };
 
 function printHelp() {
@@ -26,7 +26,7 @@ function printHelp() {
       'Commands:',
       '  tui         Start the interactive terminal UI',
       '  rooms       List KakaoTalk rooms sorted by recent activity',
-      '  scheduled   Run the scheduled sender loop',
+      '  analyze     Analyze a room and summarize recent messages',
       '  instant     Send immediately using a JSON payload',
       '  gui         Open the Electron desktop app',
       '  check       Run syntax checks',
@@ -35,7 +35,7 @@ function printHelp() {
       '  kakao-auto',
       '  kakao-auto tui',
       '  kakao-auto rooms',
-      '  kakao-auto scheduled',
+      '  kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"',
       '  kakao-auto instant examples/send-now.sample.json',
       '  kakao-auto gui',
     ].join('\n') + '\n'
