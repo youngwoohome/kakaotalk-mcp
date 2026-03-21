@@ -1,11 +1,12 @@
 {
   "name": "kakaotalk-auto-reconstructed",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "macOS-local KakaoTalk auto-send app rebuilt around AppleScript automation.",
   "main": "src/desktop/main.js",
   "type": "commonjs",
   "bin": {
+    "kakao": "./bin/kakao",
     "kakao-auto": "./bin/kakao-auto"
   },
   "scripts": {

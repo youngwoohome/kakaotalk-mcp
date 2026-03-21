@@ -9,7 +9,7 @@ Use this skill when the task is about installing or using the macOS KakaoTalk au
 
 ## What this skill covers
 
-- Homebrew install for `kakao-auto`
+- Homebrew install for `kakao` / `kakao-auto`
 - Resolving old tap conflicts such as `youngwoojung/kakao-auto`
 - Listing rooms with `kakao-auto rooms`
 - Launching CLI/TUI with `kakao-auto tui`
@@ -37,10 +37,10 @@ brew install youngwoohome/kakaotalk-cli/kakao-auto
 Then launch one of:
 
 ```bash
-kakao-auto rooms
-kakao-auto tui
-kakao-auto gui
-kakao-auto instant examples/send-now.sample.json
+kakao rooms
+kakao tui
+kakao gui
+kakao instant examples/send-now.sample.json
 ```
 
 ## If install conflicts with an old tap
@@ -59,8 +59,8 @@ brew install youngwoohome/kakaotalk-cli/kakao-auto
 After install, verify with:
 
 ```bash
-command -v kakao-auto
-kakao-auto --help
+command -v kakao
+kakao --help
 ```
 
 ## Command guide
@@ -70,37 +70,37 @@ Use these commands depending on the user request:
 - List rooms sorted by recent activity:
 
 ```bash
-kakao-auto rooms
+kakao rooms
 ```
 
 - List rooms as JSON:
 
 ```bash
-kakao-auto rooms --json
+kakao rooms --json
 ```
 
 - List more rooms:
 
 ```bash
-kakao-auto rooms --limit 100
+kakao rooms --limit 100
 ```
 
 - Interactive terminal UI:
 
 ```bash
-kakao-auto tui
+kakao tui
 ```
 
 - Desktop app:
 
 ```bash
-kakao-auto gui
+kakao gui
 ```
 
 - One-off send from a JSON payload:
 
 ```bash
-kakao-auto instant examples/send-now.sample.json
+kakao instant examples/send-now.sample.json
 ```
 
 ## When to choose each mode
@@ -127,13 +127,13 @@ kakao-auto instant examples/send-now.sample.json
 ```bash
 brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
 brew install youngwoohome/kakaotalk-cli/kakao-auto
-kakao-auto tui
+kakao tui
 ```
 
 ### Show rooms sorted by recent activity
 
 ```bash
-kakao-auto rooms
+kakao rooms
 ```
 
 ### Install and launch GUI
@@ -141,26 +141,26 @@ kakao-auto rooms
 ```bash
 brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
 brew install youngwoohome/kakaotalk-cli/kakao-auto
-kakao-auto gui
+kakao gui
 ```
 
 ### Run one-off send
 
 ```bash
-kakao-auto instant examples/send-now.sample.json
+kakao instant examples/send-now.sample.json
 ```
 
 ### Verify install before doing anything else
 
 ```bash
-command -v kakao-auto
-kakao-auto --help
+command -v kakao
+kakao --help
 ```
 
 ## Guidance
 
 - Prefer Homebrew install over `git clone` unless the user explicitly wants source checkout.
-- If the user only wants CLI, still do the Homebrew install first, then run `kakao-auto tui`.
+- If the user only wants CLI, still do the Homebrew install first, then run `kakao tui`.
 - If GUI launches on macOS as `Electron`, explain that this is expected for the current build.
 - If KakaoTalk automation fails, check Accessibility permission before changing code.
 - If the user asks what the tool can do, list the actual commands and capabilities before discussing installation details.

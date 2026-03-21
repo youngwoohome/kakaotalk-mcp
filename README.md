@@ -14,13 +14,13 @@ brew install youngwoohome/kakaotalk-cli/kakao-auto
 설치 후 채팅방 목록 확인:
 
 ```bash
-kakao-auto rooms
+kakao rooms
 ```
 
 설치 후 GUI 실행:
 
 ```bash
-kakao-auto gui
+kakao gui
 ```
 
 ## Claude Code에서 바로 시키기
@@ -28,13 +28,13 @@ kakao-auto gui
 Claude Code에 이렇게 보내면 된다:
 
 ```text
-Use the `kakaotalk-auto-mac` skill from this repo. If `kakao-auto` is missing, install it with Homebrew and resolve old tap conflicts if needed. Then run `kakao-auto rooms` and tell me the current chat rooms sorted by recent activity.
+Use the `kakaotalk-auto-mac` skill from this repo. If `kakao` is missing, install it with Homebrew and resolve old tap conflicts if needed. Then run `kakao rooms` and tell me the current chat rooms sorted by recent activity.
 ```
 
 특정 방 최근 내용을 정리시키려면:
 
 ```text
-Use the `kakaotalk-auto-mac` skill from this repo. I already have it installed. Run `kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "중요한 내용"` and summarize the recent messages.
+Use the `kakaotalk-auto-mac` skill from this repo. I already have it installed. Run `kakao analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "중요한 내용"` and summarize the recent messages.
 ```
 
 소스 checkout이 필요할 때:
@@ -44,7 +44,7 @@ git clone https://github.com/youngwoohome/kakaotalk-cli.git
 cd kakaotalk-cli
 ./scripts/install.sh --gui
 npm link
-kakao-auto gui
+kakao gui
 ```
 
 필수 조건:
@@ -56,11 +56,11 @@ kakao-auto gui
 ## 자주 쓰는 명령
 
 ```bash
-kakao-auto rooms
-kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"
-kakao-auto gui
-kakao-auto instant examples/send-now.sample.json
-kakao-auto tui
+kakao rooms
+kakao analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"
+kakao gui
+kakao instant examples/send-now.sample.json
+kakao tui
 ```
 
 ## 동작 방식

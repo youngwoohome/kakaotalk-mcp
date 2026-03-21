@@ -6,6 +6,7 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 
 const projectRoot = path.resolve(__dirname, '..');
+const commandName = path.basename(process.argv[1] || 'kakao');
 const subcommand = process.argv[2] || 'rooms';
 const args = process.argv.slice(3);
 
@@ -21,7 +22,7 @@ const commandMap = {
 function printHelp() {
   process.stdout.write(
     [
-      'Usage: kakao-auto <command> [args]',
+      `Usage: ${commandName} <command> [args]`,
       '',
       'Commands:',
       '  rooms       List KakaoTalk rooms sorted by recent activity',
@@ -32,12 +33,12 @@ function printHelp() {
       '  check       Run syntax checks',
       '',
       'Examples:',
-      '  kakao-auto',
-      '  kakao-auto rooms',
-      '  kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"',
-      '  kakao-auto instant examples/send-now.sample.json',
-      '  kakao-auto gui',
-      '  kakao-auto tui',
+      `  ${commandName}`,
+      `  ${commandName} rooms`,
+      `  ${commandName} analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"`,
+      `  ${commandName} instant examples/send-now.sample.json`,
+      `  ${commandName} gui`,
+      `  ${commandName} tui`,
     ].join('\n') + '\n'
   );
 }
