@@ -7,8 +7,8 @@ macOS 전용 KakaoTalk CLI/GUI 자동화 도구다.
 **npm (권장):**
 
 ```bash
-npm install -g kakaotalk-auto-mac        # CLI + MCP
-npm install -g kakaotalk-auto-mac --include=optional  # CLI + MCP + GUI
+npm install -g kakotalk-mcp              # CLI + MCP
+npm install -g kakotalk-mcp --include=optional  # CLI + MCP + GUI
 ```
 
 **Homebrew:**
@@ -25,7 +25,7 @@ brew install youngwoohome/kakaotalk-cli/kakao-auto
 설치 후 한 줄로 Claude Code에 카톡 도구를 등록한다:
 
 ```bash
-kakao-auto mcp install
+kakotalk-mcp install
 ```
 
 등록 후 Claude Code를 재시작하면 다음 도구가 자동 활성화된다:
@@ -47,7 +47,7 @@ Claude Code에서 바로 자연어로 요청하면 된다:
 MCP 제거:
 
 ```bash
-kakao-auto mcp remove
+kakotalk-mcp remove
 ```
 
 ## 자주 쓰는 명령
