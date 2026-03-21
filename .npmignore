@@ -1,0 +1,7 @@
+.omc/
+data/
+dist/
+native/build/
+node_modules/
+*.tgz
+.DS_Store

@@ -4,10 +4,21 @@ macOS 전용 KakaoTalk CLI/GUI 자동화 도구다.
 
 ## 바로 설치
 
+**npm (권장):**
+
+```bash
+npm install -g kakaotalk-auto-mac        # CLI + MCP
+npm install -g kakaotalk-auto-mac --include=optional  # CLI + MCP + GUI
+```
+
+**Homebrew:**
+
 ```bash
 brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
 brew install youngwoohome/kakaotalk-cli/kakao-auto
 ```
+
+> Swift native helper는 설치 시 자동으로 빌드됩니다. Xcode Command Line Tools가 필요합니다: `xcode-select --install`
 
 ## Claude Code MCP 연동
 
