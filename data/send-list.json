@@ -1,0 +1,21 @@
+[
+  {
+    "seq": 1,
+    "enabled_yn": "N",
+    "is_repeat": "Y",
+    "days": [
+      "월",
+      "화",
+      "수",
+      "목",
+      "금"
+    ],
+    "send_time": "09:00",
+    "room_name": [
+      "테스트방1"
+    ],
+    "send_message": "샘플 예약 메시지",
+    "file_path": "",
+    "file_first": true
+  }
+]

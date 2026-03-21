@@ -1,0 +1,101 @@
+#!/usr/bin/env node
+'use strict';
+
+const path = require('path');
+const { spawn } = require('child_process');
+const fs = require('fs');
+
+const projectRoot = path.resolve(__dirname, '..');
+const subcommand = process.argv[2] || 'tui';
+const args = process.argv.slice(3);
+
+const commandMap = {
+  tui: ['src/cli/tui.js'],
+  scheduled: ['src/cli/run-scheduled.js'],
+  instant: ['src/cli/send-now.js', 'examples/send-now.sample.json'],
+  gui: ['node_modules/electron/cli.js', '.'],
+  check: ['-c', 'node --check src/index.js && node --check src/cli/run-scheduled.js && node --check src/cli/send-now.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
+};
+
+function printHelp() {
+  process.stdout.write(
+    [
+      'Usage: kakao-auto <command> [args]',
+      '',
+      'Commands:',
+      '  tui         Start the interactive terminal UI',
+      '  scheduled   Run the scheduled sender loop',
+      '  instant     Send immediately using a JSON payload',
+      '  gui         Open the Electron desktop app',
+      '  check       Run syntax checks',
+      '',
+      'Examples:',
+      '  kakao-auto',
+      '  kakao-auto tui',
+      '  kakao-auto scheduled',
+      '  kakao-auto instant examples/send-now.sample.json',
+      '  kakao-auto gui',
+    ].join('\n') + '\n'
+  );
+}
+
+if (subcommand === 'help' || subcommand === '--help' || subcommand === '-h') {
+  printHelp();
+  process.exit(0);
+}
+
+if (!Object.prototype.hasOwnProperty.call(commandMap, subcommand)) {
+  process.stderr.write(`Unknown command: ${subcommand}\n\n`);
+  printHelp();
+  process.exit(1);
+}
+
+let childCommand = process.execPath;
+let childArgs = [];
+
+if (subcommand === 'gui') {
+  const electronCliPath = path.join(projectRoot, 'node_modules', 'electron', 'cli.js');
+  let guiAvailable = fs.existsSync(electronCliPath);
+
+  if (guiAvailable) {
+    try {
+      require(path.join(projectRoot, 'node_modules', 'electron'));
+    } catch {
+      guiAvailable = false;
+    }
+  }
+
+  if (!guiAvailable) {
+    process.stderr.write(
+      [
+        'GUI dependencies are not installed.',
+        'Run `npm install --include=optional` in the project root to install Electron,',
+        'or use `kakao-auto tui` / `kakao-auto instant` / `kakao-auto scheduled`.',
+        '',
+      ].join('\n')
+    );
+    process.exit(1);
+  }
+  childArgs = commandMap.gui.slice();
+} else if (subcommand === 'check') {
+  childCommand = '/bin/zsh';
+  childArgs = commandMap.check.slice();
+} else if (subcommand === 'instant') {
+  const payloadPath = args[0] || commandMap.instant[1];
+  childArgs = [commandMap.instant[0], payloadPath];
+} else {
+  childArgs = [...commandMap[subcommand], ...args];
+}
+
+const child = spawn(childCommand, childArgs, {
+  cwd: projectRoot,
+  stdio: 'inherit',
+});
+
+child.on('exit', (code, signal) => {
+  if (signal) {
+    process.kill(process.pid, signal);
+    return;
+  }
+  process.exit(code ?? 0);
+});
