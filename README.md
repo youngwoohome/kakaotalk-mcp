@@ -23,6 +23,16 @@ kakao-auto tui
 kakao-auto gui
 ```
 
+## Claude Code에서 바로 시키기
+
+Claude Code에 이렇게 보내면 된다:
+
+```text
+Install the skill from github repo `youngwoohome/kakaotalk-cli` path `skills/kakaotalk-auto-mac`, then install `kakao-auto` with Homebrew if it is missing, resolve old tap conflicts if needed, verify `kakao-auto --help`, and run `kakao-auto tui`.
+```
+
+GUI를 원하면 마지막만 `kakao-auto gui`로 바꾸면 된다.
+
 소스 checkout이 필요할 때:
 
 ```bash
