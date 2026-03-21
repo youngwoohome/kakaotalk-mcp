@@ -12,8 +12,9 @@ class KakaoAuto < Formula
 
   def install
     ENV["npm_config_cache"] = buildpath/"npm_cache"
+    ENV["npm_config_include"] = "optional"
 
-    system "npm", "install", *std_npm_args
+    system "npm", "install", "--include=optional", *std_npm_args
     bin.install_symlink libexec/"bin/kakao-auto"
   end
 
