@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 
 const projectRoot = path.resolve(__dirname, '..');
-const subcommand = process.argv[2] || 'tui';
+const subcommand = process.argv[2] || 'rooms';
 const args = process.argv.slice(3);
 
 const commandMap = {
@@ -24,20 +24,20 @@ function printHelp() {
       'Usage: kakao-auto <command> [args]',
       '',
       'Commands:',
-      '  tui         Start the interactive terminal UI',
       '  rooms       List KakaoTalk rooms sorted by recent activity',
       '  analyze     Analyze a room and summarize recent messages',
       '  instant     Send immediately using a JSON payload',
       '  gui         Open the Electron desktop app',
+      '  tui         Start the interactive terminal UI',
       '  check       Run syntax checks',
       '',
       'Examples:',
       '  kakao-auto',
-      '  kakao-auto tui',
       '  kakao-auto rooms',
       '  kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"',
       '  kakao-auto instant examples/send-now.sample.json',
       '  kakao-auto gui',
+      '  kakao-auto tui',
     ].join('\n') + '\n'
   );
 }
@@ -73,7 +73,7 @@ if (subcommand === 'gui') {
       [
         'GUI dependencies are not installed.',
         'Run `npm install --include=optional` in the project root to install Electron,',
-        'or use `kakao-auto tui` / `kakao-auto instant` / `kakao-auto scheduled`.',
+        'or use `kakao-auto rooms` / `kakao-auto analyze` / `kakao-auto instant`.',
         '',
       ].join('\n')
     );

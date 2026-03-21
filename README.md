@@ -11,10 +11,10 @@ brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cl
 brew install youngwoohome/kakaotalk-cli/kakao-auto
 ```
 
-설치 후 CLI 실행:
+설치 후 채팅방 목록 확인:
 
 ```bash
-kakao-auto tui
+kakao-auto rooms
 ```
 
 설치 후 GUI 실행:
@@ -28,10 +28,14 @@ kakao-auto gui
 Claude Code에 이렇게 보내면 된다:
 
 ```text
-Install the skill from github repo `youngwoohome/kakaotalk-cli` path `skills/kakaotalk-auto-mac`, then install `kakao-auto` with Homebrew if it is missing, resolve old tap conflicts if needed, verify `kakao-auto --help`, and run `kakao-auto tui`.
+Use the `kakaotalk-auto-mac` skill from this repo. If `kakao-auto` is missing, install it with Homebrew and resolve old tap conflicts if needed. Then run `kakao-auto rooms` and tell me the current chat rooms sorted by recent activity.
 ```
 
-GUI를 원하면 마지막만 `kakao-auto gui`로 바꾸면 된다.
+특정 방 최근 내용을 정리시키려면:
+
+```text
+Use the `kakaotalk-auto-mac` skill from this repo. I already have it installed. Run `kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "중요한 내용"` and summarize the recent messages.
+```
 
 소스 checkout이 필요할 때:
 
@@ -53,9 +57,10 @@ kakao-auto gui
 
 ```bash
 kakao-auto rooms
-kakao-auto tui
+kakao-auto analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"
 kakao-auto gui
 kakao-auto instant examples/send-now.sample.json
+kakao-auto tui
 ```
 
 ## 동작 방식
@@ -63,7 +68,7 @@ kakao-auto instant examples/send-now.sample.json
 - KakaoTalk macOS 앱을 직접 조작한다.
 - AppleScript + System Events + Swift helper 기반이다.
 - 로컬 JSON에 발송 목록과 이력을 저장한다.
-- 채팅방 목록 조회, 즉시 발송, 파일 첨부, TUI/GUI를 포함한다.
+- 채팅방 목록 조회, 특정 방 최근 내용 분석, 즉시 발송, 파일 첨부, GUI/TUI를 포함한다.
 
 ## 동작 메모
 
