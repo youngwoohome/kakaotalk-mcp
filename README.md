@@ -52,9 +52,9 @@ kakao-auto gui
 ## 자주 쓰는 명령
 
 ```bash
+kakao-auto rooms
 kakao-auto tui
 kakao-auto gui
-kakao-auto scheduled
 kakao-auto instant examples/send-now.sample.json
 ```
 
@@ -63,7 +63,7 @@ kakao-auto instant examples/send-now.sample.json
 - KakaoTalk macOS 앱을 직접 조작한다.
 - AppleScript + System Events + Swift helper 기반이다.
 - 로컬 JSON에 발송 목록과 이력을 저장한다.
-- 채팅방 불러오기, 즉시 발송, 파일 첨부, TUI/GUI를 포함한다.
+- 채팅방 목록 조회, 즉시 발송, 파일 첨부, TUI/GUI를 포함한다.
 
 ## 동작 메모
 
