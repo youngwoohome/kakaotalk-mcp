@@ -3,9 +3,9 @@ class KakaoAuto < Formula
   homepage "https://github.com/youngwoohome/kakaotalk-cli"
   url "https://github.com/youngwoohome/kakaotalk-cli.git",
       using: :git,
-      tag: "v0.1.0",
-      revision: "2c5393a712f0bd0be15429de8e0a0459d6036cbd"
-  version "0.1.0"
+      tag: "v0.1.1",
+      revision: "3acb784478772e46c1034a2003e480f701d50a6e"
+  version "0.1.1"
 
   depends_on "node"
   depends_on :macos
