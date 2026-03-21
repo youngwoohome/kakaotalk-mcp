@@ -1,8 +1,10 @@
 class KakaoAuto < Formula
   desc "macOS KakaoTalk automation CLI"
-  homepage "https://example.com/kakao-auto"
-  url "REPLACE_ME"
-  sha256 "REPLACE_ME"
+  homepage "https://github.com/youngwoohome/kakaotalk-cli"
+  url "https://github.com/youngwoohome/kakaotalk-cli.git",
+      using: :git,
+      tag: "v0.1.0",
+      revision: "2c5393a712f0bd0be15429de8e0a0459d6036cbd"
   version "0.1.0"
 
   depends_on "node"

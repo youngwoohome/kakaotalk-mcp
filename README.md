@@ -4,17 +4,15 @@ macOS 전용 KakaoTalk CLI/GUI 자동화 도구다.
 
 ## 바로 설치
 
-CLI만 쓸 때:
+Homebrew로 CLI 설치:
 
 ```bash
-git clone https://github.com/youngwoohome/kakaotalk-cli.git
-cd kakaotalk-cli
-./scripts/install.sh
-npm link
+brew tap youngwoohome/kakaotalk-cli https://github.com/youngwoohome/kakaotalk-cli
+brew install youngwoohome/kakaotalk-cli/kakao-auto
 kakao-auto tui
 ```
 
-GUI까지 같이 받으려면:
+GUI까지 같이 쓰려면:
 
 ```bash
 git clone https://github.com/youngwoohome/kakaotalk-cli.git
@@ -22,6 +20,16 @@ cd kakaotalk-cli
 ./scripts/install.sh --gui
 npm link
 kakao-auto gui
+```
+
+git clone으로 CLI만 설치할 때:
+
+```bash
+git clone https://github.com/youngwoohome/kakaotalk-cli.git
+cd kakaotalk-cli
+./scripts/install.sh
+npm link
+kakao-auto tui
 ```
 
 필수 조건:
@@ -54,20 +62,6 @@ kakao-auto instant examples/send-now.sample.json
 - AppleScript + System Events + Swift helper 기반이다.
 - 로컬 JSON에 발송 목록과 이력을 저장한다.
 - 채팅방 불러오기, 즉시 발송, 파일 첨부, TUI/GUI를 포함한다.
-
-## Homebrew 배포 준비
-
-로컬에서 Brew용 소스 아카이브:
-
-```bash
-npm run brew:dist
-```
-
-formula 생성:
-
-```bash
-npm run brew:formula -- --url https://github.com/<owner>/<repo>/archive/refs/tags/v0.1.0.tar.gz --sha256 <sha256> --homepage https://github.com/<owner>/<repo> --output /opt/homebrew/Library/Taps/<user>/homebrew-kakao-auto/Formula/kakao-auto.rb
-```
 
 ## 동작 메모
 
