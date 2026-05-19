@@ -17,6 +17,20 @@ macOS KakaoTalk automation CLI and Claude Code MCP server.
 
 The old `kakao-auto` and `kakao-mcp` commands were removed in `0.4.0` to reduce confusion.
 
+### Common Workflows
+
+`kakotalk-mcp` is for automating real KakaoTalk workflows from Claude Code or the terminal.
+
+| Workflow | Use MCP for | Use CLI for |
+| --- | --- | --- |
+| Send notices to multiple chat rooms | Draft the message, inspect context, and confirm each send | Send one JSON payload to many rooms with `roomNames` |
+| Summarize Open Chat activity | Read recent messages and summarize topics, questions, links, and action items | Export recent messages as structured JSON |
+| Track a busy room over time | Ask Claude Code to review recent messages repeatedly and maintain a running summary | Run analysis commands from scripts or cron |
+| Send files with context | Compose a short note and send it with a file after confirmation | Send a `filePath` and message from a JSON payload |
+| Draft safer replies | Read recent context before writing a response | Send only after the payload is explicit |
+
+MCP currently sends to one room per `send_message` call. For bulk sends, use the CLI `instant` command with multiple `roomNames`.
+
 ### Install
 
 ```bash
@@ -102,8 +116,9 @@ KAKAOTALK_MCP_ALLOW_UNCONFIRMED_SEND=1 kakotalk-mcp serve
 Example prompts in Claude Code:
 
 ```text
-Send "I will be 10 minutes late" to John.
-Read the latest 150 messages in the research chat and summarize the papers.
+Read the latest 200 messages in the product Open Chat and summarize recurring questions.
+Draft a notice for the beta testers room, then send it after I confirm.
+Read the latest messages in the study room and extract links, deadlines, and action items.
 ```
 
 ### Local Data
@@ -147,6 +162,20 @@ kakotalk-mcp install
 - `kakotalk-mcp`: Claude Code MCP 등록/해제 및 stdio MCP 서버
 
 혼동을 줄이기 위해 `0.4.0`부터 예전 `kakao-auto`, `kakao-mcp` 명령은 제거했습니다.
+
+### 주요 사용 흐름
+
+`kakotalk-mcp`는 Claude Code나 터미널에서 실제 카카오톡 작업을 자동화하기 위한 도구입니다.
+
+| 사용 흐름 | MCP로 할 수 있는 일 | CLI로 할 수 있는 일 |
+| --- | --- | --- |
+| 여러 채팅방에 공지 보내기 | 문구를 작성하고 맥락을 확인한 뒤 각 발송을 승인 | `roomNames`가 들어간 JSON으로 여러 방에 한 번에 발송 |
+| 오픈채팅방 흐름 정리 | 최근 메시지를 읽고 주제, 질문, 링크, 할 일 요약 | 최근 메시지를 구조화된 JSON으로 출력 |
+| 바쁜 채팅방 트래킹 | Claude Code가 최근 대화를 반복 확인하고 누적 요약 | 스크립트나 cron에서 분석 명령 실행 |
+| 파일과 설명 함께 보내기 | 짧은 설명을 작성하고 확인 후 파일과 함께 전송 | JSON payload에 `filePath`와 메시지를 넣어 전송 |
+| 답장 초안 만들기 | 최근 대화 맥락을 읽은 뒤 답장 문구 작성 | 명시적인 payload만 직접 전송 |
+
+현재 MCP의 `send_message`는 호출당 한 방에 전송합니다. 여러 방 일괄 발송은 CLI의 `instant` 명령과 여러 `roomNames`를 사용하세요.
 
 ### 설치
 
@@ -233,8 +262,9 @@ KAKAOTALK_MCP_ALLOW_UNCONFIRMED_SEND=1 kakotalk-mcp serve
 Claude Code 예시:
 
 ```text
-서정이한테 10분 늦는다고 보내
-고양이 논문 방에서 최근 150개 메시지 보고 논문들 정리해줘
+제품 오픈채팅방 최근 200개 메시지를 읽고 반복되는 질문을 정리해줘
+베타 테스터 방에 보낼 공지 문구를 작성하고, 내가 확인하면 보내줘
+스터디방 최근 메시지에서 링크, 마감일, 할 일을 뽑아줘
 ```
 
 ### 로컬 데이터
