@@ -2,23 +2,16 @@
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-MODE="cli"
 
 for arg in "$@"; do
   case "$arg" in
-    --gui)
-      MODE="gui"
-      ;;
     --cli)
-      MODE="cli"
       ;;
     -h|--help)
       cat <<'EOF'
-Usage: ./scripts/install.sh [--cli] [--gui]
+Usage: ./scripts/install.sh [--cli]
 
-Defaults to CLI-only installation.
-  --cli   Install runtime without optional GUI dependencies
-  --gui   Install runtime including Electron GUI dependencies
+Installs CLI/MCP runtime dependencies.
 EOF
       exit 0
       ;;
@@ -30,11 +23,5 @@ EOF
 done
 
 cd "$PROJECT_ROOT"
-
-if [[ "$MODE" == "gui" ]]; then
-  npm install --include=optional
-  echo "Installed CLI + GUI dependencies."
-else
-  npm install --omit=optional
-  echo "Installed CLI-only dependencies."
-fi
+npm install
+echo "Installed CLI/MCP dependencies."

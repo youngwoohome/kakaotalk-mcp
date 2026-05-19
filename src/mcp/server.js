@@ -98,7 +98,7 @@ async function main() {
       file_path: z.string().optional().describe('첨부할 파일 경로 (선택사항)'),
     },
     async ({ room_name, message, file_path }) => {
-      const storeDir = path.join(os.homedir(), '.kakao-auto');
+      const storeDir = path.join(os.homedir(), '.kakaotalk-cli');
       const logs = [];
       const engine = createEngine({
         storeDir,

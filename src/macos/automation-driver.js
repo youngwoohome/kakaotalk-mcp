@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFile } = require('child_process');
+const { randomUUID } = require('crypto');
 const { promisify } = require('util');
 
 const { setClipboardText } = require('../runtime/clipboard');
@@ -318,7 +319,10 @@ function createMacAutomationDriver(options = {}) {
 
   async function searchAndOpenRoomByName(roomName) {
     await ensureKakaoTalkRunning();
-    await setClipboardText(roomName);
+    const clipboardReady = await setClipboardText(roomName);
+    if (!clipboardReady) {
+      throw new Error('클립보드에 채팅방 이름을 복사하지 못했습니다.');
+    }
 
     await runOsaScript([
       `tell application "${config.appName}" to activate`,
@@ -462,7 +466,10 @@ function createMacAutomationDriver(options = {}) {
       // Fall through to AppleScript fallback.
     }
 
-    await setClipboardText(message);
+    const clipboardReady = await setClipboardText(message);
+    if (!clipboardReady) {
+      throw new Error('클립보드에 메시지를 복사하지 못했습니다.');
+    }
     await runOsaScript([
       `tell application "${config.appName}" to activate`,
       'delay 0.2',
@@ -520,8 +527,8 @@ function createMacAutomationDriver(options = {}) {
       .replace(/[\\/:*?"<>|]/g, '_')
       .trim() || 'upload';
     const extension = parsedPath.ext || '';
-    const shortToken = String(Math.floor(Math.random() * 10));
-    const stagedPath = path.join(downloadsDir, `${safeBaseName}_${shortToken}${extension}`);
+    const shortToken = randomUUID().slice(0, 8);
+    const stagedPath = path.join(downloadsDir, `${safeBaseName}_${Date.now()}_${shortToken}${extension}`);
     fs.copyFileSync(filePath, stagedPath);
     return stagedPath;
   }

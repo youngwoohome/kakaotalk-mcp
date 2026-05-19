@@ -2,29 +2,8 @@
 
 const { execFileSync } = require('child_process');
 const path = require('path');
-const fs = require('fs');
 
 const SERVER_NAME = 'kakaotalk';
-
-function getMcpBinaryPath() {
-  // Resolve kakao-mcp path relative to this script (bin/ is next to src/)
-  const projectRoot = path.resolve(__dirname, '../..');
-  const binPath = path.join(projectRoot, 'bin', 'kakao-mcp');
-  if (fs.existsSync(binPath)) {
-    return binPath;
-  }
-
-  // Fallback: look for kakao-mcp next to kakao-auto in PATH
-  const kakaoAutoPath = process.argv[1];
-  if (kakaoAutoPath) {
-    const siblingPath = path.join(path.dirname(kakaoAutoPath), 'kakao-mcp');
-    if (fs.existsSync(siblingPath)) {
-      return siblingPath;
-    }
-  }
-
-  throw new Error('kakao-mcp 바이너리를 찾지 못했습니다.');
-}
 
 function checkClaudeCli() {
   try {
@@ -41,10 +20,10 @@ function install() {
     process.exit(1);
   }
 
-  const mcpBin = getMcpBinaryPath();
-  process.stdout.write(`MCP 서버 등록 중: ${mcpBin}\n`);
+  const commandName = path.basename(process.argv[1] || 'kakotalk-mcp');
+  process.stdout.write(`MCP 서버 등록 중: ${commandName} serve\n`);
 
-  execFileSync('claude', ['mcp', 'add', SERVER_NAME, '-s', 'user', '--', 'node', mcpBin], {
+  execFileSync('claude', ['mcp', 'add', SERVER_NAME, '-s', 'user', '--', commandName, 'serve'], {
     stdio: 'inherit',
   });
 
@@ -68,33 +47,36 @@ function remove() {
 }
 
 function printHelp() {
+  const commandName = path.basename(process.argv[1] || 'kakotalk-mcp');
+
   process.stdout.write(
     [
-      'Usage: kakao-auto mcp <subcommand>',
+      `Usage: ${commandName} <subcommand>`,
       '',
       'Subcommands:',
       '  install    Claude Code에 kakaotalk MCP 서버를 등록합니다',
       '  remove     Claude Code에서 kakaotalk MCP 서버를 제거합니다',
+      '  serve      MCP 서버를 stdio로 실행합니다 (Claude Code 내부 실행용)',
       '',
       'Examples:',
-      '  kakao-auto mcp install',
-      '  kakao-auto mcp remove',
+      `  ${commandName} install`,
+      `  ${commandName} remove`,
     ].join('\n') + '\n'
   );
 }
 
 function main() {
-  const sub = process.argv[3] || '';
+  const sub = process.argv[2] || '';
 
   if (sub === 'install') {
     install();
   } else if (sub === 'remove' || sub === 'uninstall') {
     remove();
+  } else if (sub === '' || sub === 'help' || sub === '--help' || sub === '-h') {
+    printHelp();
   } else {
     printHelp();
-    if (sub) {
-      process.exit(1);
-    }
+    process.exit(1);
   }
 }
 

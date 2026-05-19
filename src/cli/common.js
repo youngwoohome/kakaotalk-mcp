@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const dotenv = require('dotenv');
 
@@ -19,7 +20,7 @@ function loadJsonArg(index = 2) {
 function getStoreDir() {
   return process.env.STORE_DIR
     ? path.resolve(process.cwd(), process.env.STORE_DIR)
-    : path.resolve(__dirname, '../../data');
+    : path.join(os.homedir(), '.kakaotalk-cli');
 }
 
 function createConsoleLogger(prefix = 'engine') {

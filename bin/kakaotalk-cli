@@ -3,7 +3,6 @@
 
 const path = require('path');
 const { spawn } = require('child_process');
-const fs = require('fs');
 
 const projectRoot = path.resolve(__dirname, '..');
 const commandName = path.basename(process.argv[1] || 'kakao');
@@ -15,9 +14,8 @@ const commandMap = {
   rooms: ['src/cli/rooms.js'],
   analyze: ['src/cli/analyze.js'],
   instant: ['src/cli/send-now.js', 'examples/send-now.sample.json'],
-  mcp: ['src/cli/mcp.js'],
-  gui: ['node_modules/electron/cli.js', '.'],
-  check: ['-c', 'node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js'],
+  scheduled: ['src/cli/run-scheduled.js'],
+  check: ['scripts/check.js'],
 };
 
 function printHelp() {
@@ -29,8 +27,7 @@ function printHelp() {
       '  rooms       List KakaoTalk rooms sorted by recent activity',
       '  analyze     Analyze a room and summarize recent messages',
       '  instant     Send immediately using a JSON payload',
-      '  mcp         Manage Claude Code MCP integration (install / remove)',
-      '  gui         Open the Electron desktop app',
+      '  scheduled   Run scheduled sends from the local store',
       '  tui         Start the interactive terminal UI',
       '  check       Run syntax checks',
       '',
@@ -39,7 +36,7 @@ function printHelp() {
       `  ${commandName} rooms`,
       `  ${commandName} analyze --room "YOUTH FOUNDER CLUB" --limit 120 --focus "고객 니즈"`,
       `  ${commandName} instant examples/send-now.sample.json`,
-      `  ${commandName} gui`,
+      `  ${commandName} scheduled`,
       `  ${commandName} tui`,
     ].join('\n') + '\n'
   );
@@ -59,32 +56,7 @@ if (!Object.prototype.hasOwnProperty.call(commandMap, subcommand)) {
 let childCommand = process.execPath;
 let childArgs = [];
 
-if (subcommand === 'gui') {
-  const electronCliPath = path.join(projectRoot, 'node_modules', 'electron', 'cli.js');
-  let guiAvailable = fs.existsSync(electronCliPath);
-
-  if (guiAvailable) {
-    try {
-      require(path.join(projectRoot, 'node_modules', 'electron'));
-    } catch {
-      guiAvailable = false;
-    }
-  }
-
-  if (!guiAvailable) {
-    process.stderr.write(
-      [
-        'GUI dependencies are not installed.',
-        'Run `npm install --include=optional` in the project root to install Electron,',
-        'or use `kakao-auto rooms` / `kakao-auto analyze` / `kakao-auto instant`.',
-        '',
-      ].join('\n')
-    );
-    process.exit(1);
-  }
-  childArgs = commandMap.gui.slice();
-} else if (subcommand === 'check') {
-  childCommand = '/bin/zsh';
+if (subcommand === 'check') {
   childArgs = commandMap.check.slice();
 } else if (subcommand === 'instant') {
   const payloadPath = args[0] || commandMap.instant[1];

@@ -5,6 +5,9 @@ const path = require('path');
 
 process.chdir(path.resolve(__dirname, '..'));
 
-// Inject 'mcp' as argv[2] so src/cli/mcp.js works with kakotalk-mcp install/remove
-process.argv.splice(2, 0, 'mcp');
-require('../src/cli/mcp.js');
+if (process.argv[2] === 'serve') {
+  process.argv.splice(2, 1);
+  require('../src/mcp/server.js');
+} else {
+  require('../src/cli/mcp.js');
+}

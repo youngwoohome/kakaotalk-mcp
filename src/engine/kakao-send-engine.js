@@ -133,13 +133,15 @@ class KakaoSendEngine {
       this.addHistory(`발송 이력 저장 실패: ${error.message}`);
     });
 
-    if (batch.isRepeat === 'N' && batch.rowSeq) {
+    if (batch.isRepeat === 'N' && batch.rowSeq && failCount === 0) {
       this.disableOneTimeRow({
         seq: batch.rowSeq,
         completedDate: batch.completedDate,
       }).catch((error) => {
         this.addHistory(`1회성 발송 비활성화 실패: ${error.message}`);
       });
+    } else if (batch.isRepeat === 'N' && batch.rowSeq) {
+      this.addHistory('1회성 발송이 실패 또는 부분 실패하여 예약을 유지합니다.');
     }
 
     delete this.batchResults[item.batchId];

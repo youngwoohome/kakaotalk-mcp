@@ -1,43 +1,55 @@
 {
   "name": "kakotalk-mcp",
-  "version": "0.1.4",
+  "version": "0.4.0",
   "description": "macOS KakaoTalk automation CLI with Claude Code MCP integration.",
-  "main": "src/desktop/main.js",
   "type": "commonjs",
   "bin": {
-    "kakao-auto": "./bin/kakao-auto",
-    "kakao-mcp": "./bin/kakao-mcp",
-    "kakotalk-mcp": "./bin/kakotalk-mcp"
+    "kakaotalk-cli": "bin/kakaotalk-cli",
+    "kakotalk-mcp": "bin/kakotalk-mcp"
   },
+  "files": [
+    "bin/",
+    "examples/",
+    "native/",
+    "scripts/",
+    "src/",
+    ".env.example",
+    "README.md"
+  ],
   "scripts": {
-    "start": "node ./bin/kakao-auto",
+    "start": "node ./bin/kakaotalk-cli",
     "postinstall": "node ./scripts/postinstall.js",
-    "check": "node --check src/index.js && node --check src/cli/send-now.js && node --check src/cli/rooms.js && node --check src/cli/analyze.js && node --check src/cli/tui.js && node --check src/desktop/main.js && node --check src/desktop/preload.js && node --check src/desktop/renderer/app.js && node --check src/macos/automation-driver.js && node --check src/macos/osascript.js",
-    "start:gui": "electron .",
+    "check": "node ./scripts/check.js",
     "start:tui": "node src/cli/tui.js",
     "start:instant": "node src/cli/send-now.js examples/send-now.sample.json",
     "prepublishOnly": "node ./scripts/postinstall.js"
   },
-  "keywords": ["kakaotalk", "kakao", "automation", "macos", "cli", "mcp", "claude"],
+  "keywords": [
+    "kakaotalk",
+    "kakao",
+    "automation",
+    "macos",
+    "cli",
+    "mcp",
+    "claude"
+  ],
   "author": "youngwoohome",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/youngwoohome/kakaotalk-cli.git"
+    "url": "git+https://github.com/youngwoohome/kakaotalk-mcp.git"
   },
-  "homepage": "https://github.com/youngwoohome/kakaotalk-cli#readme",
+  "homepage": "https://github.com/youngwoohome/kakaotalk-mcp#readme",
   "engines": {
     "node": ">=18.0.0"
   },
-  "os": ["darwin"],
+  "os": [
+    "darwin"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.27.1",
     "clipboardy": "^4.0.0",
     "dotenv": "^16.4.5",
-    "iconv-lite": "^0.6.3",
     "zod": "^3.0.0"
-  },
-  "optionalDependencies": {
-    "electron": "^33.1.0"
   }
 }

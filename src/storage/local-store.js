@@ -11,7 +11,7 @@ class LocalStore {
   }
 
   async ensureFiles() {
-    await fs.mkdir(this.storeDir, { recursive: true });
+    await fs.mkdir(this.storeDir, { recursive: true, mode: 0o700 });
     await this.ensureJsonFile(this.sendListPath, []);
     await this.ensureJsonFile(this.historyPath, []);
   }
@@ -20,7 +20,7 @@ class LocalStore {
     try {
       await fs.access(filePath);
     } catch {
-      await fs.writeFile(filePath, JSON.stringify(fallbackValue, null, 2));
+      await fs.writeFile(filePath, JSON.stringify(fallbackValue, null, 2), { mode: 0o600 });
     }
   }
 
@@ -37,7 +37,7 @@ class LocalStore {
 
   async writeJson(filePath, value) {
     await this.ensureFiles();
-    await fs.writeFile(filePath, JSON.stringify(value, null, 2));
+    await fs.writeFile(filePath, JSON.stringify(value, null, 2), { mode: 0o600 });
   }
 
   async fetchSendList() {
