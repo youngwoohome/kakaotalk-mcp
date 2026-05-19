@@ -17,19 +17,6 @@ macOS KakaoTalk automation CLI and Claude Code MCP server.
 
 The old `kakao-auto` and `kakao-mcp` commands were removed in `0.4.0` to reduce confusion.
 
-### What You Can Do
-
-| Use case | Ask Claude Code with MCP | Run from CLI |
-| --- | --- | --- |
-| List KakaoTalk rooms | `List my recent KakaoTalk rooms.` | `kakaotalk-cli rooms` |
-| Find the exact room name | `Find the KakaoTalk room that matches "design".` | `kakaotalk-cli rooms --json` |
-| Read recent messages | `Read the latest 150 messages in "Team Chat" and summarize decisions.` | `kakaotalk-cli analyze --room "Team Chat" --limit 150 --json` |
-| Send a confirmed message | `Send "I will be 10 minutes late" to "Team Chat".` | `kakaotalk-cli instant examples/send-now.sample.json` |
-| Send with a file | `Send this file to "Team Chat" with a short note.` | Use `filePath` in the instant JSON payload |
-| Use a terminal UI | Use the CLI directly | `kakaotalk-cli tui` |
-
-MCP is best when you want Claude Code to read rooms, summarize conversations, find room names, or prepare/send a message with a confirmation step. The CLI is best for scripts, repeatable local workflows, and direct terminal use.
-
 ### Install
 
 ```bash
@@ -160,19 +147,6 @@ kakotalk-mcp install
 - `kakotalk-mcp`: Claude Code MCP 등록/해제 및 stdio MCP 서버
 
 혼동을 줄이기 위해 `0.4.0`부터 예전 `kakao-auto`, `kakao-mcp` 명령은 제거했습니다.
-
-### 할 수 있는 일
-
-| 용도 | Claude Code MCP에서 요청 | CLI에서 실행 |
-| --- | --- | --- |
-| 카카오톡 방 목록 보기 | `최근 카카오톡 방 목록 보여줘.` | `kakaotalk-cli rooms` |
-| 정확한 방 이름 찾기 | `"디자인" 들어간 카카오톡 방 찾아줘.` | `kakaotalk-cli rooms --json` |
-| 최근 메시지 읽고 요약 | `"팀 채팅" 최근 150개 메시지 읽고 결정사항 정리해줘.` | `kakaotalk-cli analyze --room "팀 채팅" --limit 150 --json` |
-| 확인 후 메시지 보내기 | `"팀 채팅"에 "10분 늦어요"라고 보내.` | `kakaotalk-cli instant examples/send-now.sample.json` |
-| 파일과 함께 보내기 | `"팀 채팅"에 이 파일이랑 짧은 설명 보내.` | instant JSON payload의 `filePath` 사용 |
-| 터미널 UI 사용 | CLI 직접 사용 | `kakaotalk-cli tui` |
-
-MCP는 Claude Code가 방을 찾고, 최근 대화를 읽고, 내용을 요약하고, 확인 단계를 거쳐 메시지를 보내게 할 때 적합합니다. CLI는 스크립트, 반복 작업, 터미널에서 직접 실행하는 용도에 적합합니다.
 
 ### 설치
 
