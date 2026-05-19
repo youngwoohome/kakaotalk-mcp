@@ -1,10 +1,10 @@
 # kakotalk-mcp
 
+[![npm](https://img.shields.io/npm/v/kakotalk-mcp?label=npm&color=cb3837)](https://www.npmjs.com/package/kakotalk-mcp)
+
 macOS KakaoTalk automation CLI and Claude Code MCP server.
 
 한국어 설명은 아래 [한국어](#한국어) 섹션을 참고하세요.
-
-NPM: [kakotalk-mcp](https://www.npmjs.com/package/kakotalk-mcp)
 
 ## English
 
@@ -138,8 +138,6 @@ kakotalk-mcp install
 - CLI and MCP share the same local JSON store
 
 ## 한국어
-
-NPM 패키지: [kakotalk-mcp](https://www.npmjs.com/package/kakotalk-mcp)
 
 ### 제공 기능
 
