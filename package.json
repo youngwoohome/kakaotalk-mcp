@@ -1,6 +1,6 @@
 {
   "name": "kakotalk-mcp",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "macOS KakaoTalk automation CLI with Claude Code MCP integration.",
   "type": "commonjs",
   "bin": {
