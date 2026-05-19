@@ -10,7 +10,7 @@ const execFileAsync = promisify(execFile);
 const projectRoot = path.resolve(__dirname, '../..');
 const sourcePath = path.join(projectRoot, 'native', 'KakaoMacNative.swift');
 const buildDir = path.join(projectRoot, 'native', 'build');
-const binaryPath = path.join(buildDir, 'kakao-mac-native');
+const binaryPath = path.join(buildDir, 'kakaotalk-native');
 
 function ensureBinary() {
   fs.mkdirSync(buildDir, { recursive: true });
